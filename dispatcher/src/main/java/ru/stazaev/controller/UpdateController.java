@@ -44,17 +44,16 @@ public class UpdateController {
             switch (messageText){
                 case "/register":
                     registerUser(update);
+                    break;
                 default:
-                    setView(messageUtils.generateSendMessageWithText(update,messageText));
+                    setView(messageUtils.generateSendMessageWithText(update,"messageText"));
+                    break;
             }
         }
     }
 
     private void registerUser(Update update) {
         updateProducer.produce(REGISTER_USER,update);
-        var sendMessage = messageUtils.generateSendMessageWithText(update,
-                "Регистрация");
-        setView(sendMessage);
     }
 
     public void setView(SendMessage sendMessage) {

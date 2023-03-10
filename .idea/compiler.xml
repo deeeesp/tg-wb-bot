@@ -6,13 +6,17 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="rabbitmq-queues" />
         <module name="dispatcher" />
+        <module name="registerNode" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="dispatcher" options="-parameters" />
+      <module name="rabbitmq-queues" options="-parameters" />
+      <module name="registerNode" options="-parameters" />
     </option>
   </component>
 </project>

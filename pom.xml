@@ -10,7 +10,8 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>dispatcher</module>
-        <module>queues-rabbitmq</module>
+        <module>registerNode</module>
+        <module>rabbitmq-queues</module>
     </modules>
 
     <properties>
