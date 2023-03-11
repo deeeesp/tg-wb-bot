@@ -8,6 +8,7 @@ import ru.stazaev.service.UpdateProducer;
 import ru.stazaev.utils.MessageUtils;
 
 import static ru.stazaev.queue.RabbitQueue.REGISTER_USER;
+import static ru.stazaev.queue.RabbitQueue.WEATHER_REQUEST;
 
 @Component
 @Log4j
@@ -41,19 +42,20 @@ public class UpdateController {
     private void distributeMessage(Update update) {
         if (update.getMessage().hasText()){
             var messageText = update.getMessage().getText();
-            switch (messageText){
-                case "/register":
-                    registerUser(update);
-                    break;
-                default:
-                    setView(messageUtils.generateSendMessageWithText(update,"messageText"));
-                    break;
+            switch (messageText) {
+                case "/register" -> registerUser(update);
+                case "/weather" -> weatherRequest(update);
+                default -> setView(messageUtils.generateSendMessageWithText(update, "messageText"));
             }
         }
     }
 
     private void registerUser(Update update) {
         updateProducer.produce(REGISTER_USER,update);
+    }
+
+    private void weatherRequest(Update update){
+        updateProducer.produce(WEATHER_REQUEST,update);
     }
 
     public void setView(SendMessage sendMessage) {

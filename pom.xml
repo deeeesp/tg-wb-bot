@@ -13,6 +13,7 @@
         <module>registerNode</module>
         <module>rabbitmq-queues</module>
         <module>common-jpa</module>
+        <module>weatherNode</module>
     </modules>
 
     <properties>
