@@ -9,18 +9,22 @@
         <outputRelativeToContentRoot value="true" />
         <module name="rabbitmq-queues" />
         <module name="common-jpa" />
+        <module name="node" />
         <module name="weatherNode" />
         <module name="dispatcher" />
-        <module name="registerNode" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="messageNode" target="17" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="common-jpa" options="-parameters" />
       <module name="dispatcher" options="-parameters" />
+      <module name="messageNode" options="-parameters" />
+      <module name="node" options="-parameters" />
       <module name="rabbitmq-queues" options="-parameters" />
-      <module name="registerNode" options="-parameters" />
       <module name="weatherNode" options="-parameters" />
     </option>
   </component>

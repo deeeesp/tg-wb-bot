@@ -9,6 +9,7 @@
     </option>
     <option name="ignoredFiles">
       <set>
+        <option value="$PROJECT_DIR$/messageNode/pom.xml" />
         <option value="$PROJECT_DIR$/queues-rabbitmq/pom.xml" />
       </set>
     </option>

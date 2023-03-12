@@ -2,6 +2,7 @@ package ru.stazaev.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import ru.stazaev.entity.enums.UserState;
 
 @Getter
 @Setter
@@ -17,6 +18,7 @@ public class AppUser {
     private Long id;
     private Long telegramUserId;
     private String name;
-
     private String city;
+    @Enumerated(EnumType.STRING)
+    private UserState state;
 }

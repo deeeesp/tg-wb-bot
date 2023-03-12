@@ -7,8 +7,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.stazaev.service.UpdateProducer;
 import ru.stazaev.utils.MessageUtils;
 
-import static ru.stazaev.queue.RabbitQueue.REGISTER_USER;
-import static ru.stazaev.queue.RabbitQueue.WEATHER_REQUEST;
+import static ru.stazaev.queue.RabbitQueue.*;
 
 @Component
 @Log4j
@@ -42,12 +41,20 @@ public class UpdateController {
     private void distributeMessage(Update update) {
         if (update.getMessage().hasText()){
             var messageText = update.getMessage().getText();
-            switch (messageText) {
-                case "/register" -> registerUser(update);
-                case "/weather" -> weatherRequest(update);
-                default -> setView(messageUtils.generateSendMessageWithText(update, "messageText"));
+            if (update.getMessage().isCommand()){
+                switch (messageText) {
+                    case "/register" -> registerUser(update);
+                    case "/weather" -> weatherRequest(update);
+                    default -> setView(messageUtils.generateSendMessageWithText(update, "messageText"));
+                }
+            }else {
+                messageHandler(update);
             }
         }
+    }
+
+    private void messageHandler(Update update){
+        updateProducer.produce(MESSAGE_HANDLER,update);
     }
 
     private void registerUser(Update update) {

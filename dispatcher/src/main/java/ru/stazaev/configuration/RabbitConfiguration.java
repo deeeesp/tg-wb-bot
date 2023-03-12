@@ -27,4 +27,7 @@ public class RabbitConfiguration {
 
     @Bean
     public Queue weatherRequestQueue(){return new Queue(WEATHER_REQUEST);}
+
+    @Bean
+    public Queue messageHandlerQueue(){return new Queue(MESSAGE_HANDLER);}
 }

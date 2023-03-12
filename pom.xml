@@ -10,7 +10,7 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>dispatcher</module>
-        <module>registerNode</module>
+        <module>node</module>
         <module>rabbitmq-queues</module>
         <module>common-jpa</module>
         <module>weatherNode</module>
