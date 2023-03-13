@@ -15,16 +15,22 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="accuweatherNode" target="17" />
+      <module name="common-utils" target="17" />
       <module name="messageNode" target="17" />
+      <module name="test" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="accuweatherNode" options="-parameters" />
       <module name="common-jpa" options="-parameters" />
+      <module name="common-utils" options="-parameters" />
       <module name="dispatcher" options="-parameters" />
       <module name="messageNode" options="-parameters" />
       <module name="node" options="-parameters" />
       <module name="rabbitmq-queues" options="-parameters" />
+      <module name="test" options="-parameters" />
       <module name="weatherNode" options="-parameters" />
     </option>
   </component>

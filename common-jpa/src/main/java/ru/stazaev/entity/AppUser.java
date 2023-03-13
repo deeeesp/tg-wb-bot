@@ -19,6 +19,7 @@ public class AppUser {
     private Long telegramUserId;
     private String name;
     private String city;
+    private int code;
     @Enumerated(EnumType.STRING)
     private UserState state;
 }

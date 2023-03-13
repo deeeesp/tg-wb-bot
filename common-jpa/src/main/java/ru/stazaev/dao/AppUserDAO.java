@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.stazaev.entity.AppUser;
 import ru.stazaev.entity.enums.UserState;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface AppUserDAO extends JpaRepository<AppUser,Long> {
@@ -17,4 +18,11 @@ public interface AppUserDAO extends JpaRepository<AppUser,Long> {
     @Transactional
     @Query("update AppUser a set a.city =:city, a.state =:state where a.telegramUserId =:id")
     void updateCityByTelegramUserId(@Param("id") long id, @Param("city") String city, @Param("state") UserState status);
+
+    @Modifying
+    @Transactional
+    @Query("update AppUser a set a.code =:code, a.state =:state where a.telegramUserId =:id")
+    void updateCityCopeByTelegramUserId(@Param("id") long id, @Param("code") int code, @Param("state") UserState status);
+
+//    Optional<AppUser> findAppUserByCity(String city);
 }

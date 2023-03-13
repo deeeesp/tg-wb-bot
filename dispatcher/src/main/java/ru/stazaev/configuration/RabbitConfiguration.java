@@ -30,4 +30,10 @@ public class RabbitConfiguration {
 
     @Bean
     public Queue messageHandlerQueue(){return new Queue(MESSAGE_HANDLER);}
+
+    @Bean
+    public Queue cityCodeRequestQueue(){return new Queue(CITY_CODE_REQUEST);}
+
+    @Bean
+    public Queue cityCodeResponseQueue(){return new Queue(CITY_CODE_RESPONSE);}
 }
