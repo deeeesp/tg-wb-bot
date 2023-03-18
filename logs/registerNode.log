@@ -14,3 +14,7 @@
 2023-03-14 00:09:08 DEBUG ConsumerServiceImpl:39 - x
 2023-03-14 00:10:07 DEBUG ConsumerServiceImpl:39 - Москва
 2023-03-14 00:10:07 DEBUG ConsumerServiceImpl:47 - ru.stazaev.entity.dto.AppUserDTO@32e09eca
+2023-03-18 23:14:50 DEBUG ConsumerServiceImpl:39 - Воронеж
+2023-03-18 23:14:51 DEBUG ConsumerServiceImpl:47 - ru.stazaev.entity.dto.AppUserDTO@5522ed82
+2023-03-18 23:46:51 DEBUG ConsumerServiceImpl:39 - Москва
+2023-03-18 23:50:19 DEBUG ConsumerServiceImpl:47 - ru.stazaev.entity.dto.AppUserDTO@5cdf2220

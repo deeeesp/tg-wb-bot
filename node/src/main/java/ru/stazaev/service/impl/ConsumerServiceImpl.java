@@ -45,7 +45,6 @@ public class ConsumerServiceImpl implements ConsumerService {
     @RabbitListener(queues = CITY_CODE_RESPONSE)
     public void saveUserCityCode(AppUserDTO appUserDTO){
         log.debug(appUserDTO);
-        System.out.println("code response");
         registrationService.saveCode(appUserDTO);
     }
 }

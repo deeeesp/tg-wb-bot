@@ -76,7 +76,7 @@ public class RegistrationServiceImpl implements RegistrationService {
         appUserDAO.updateCityCopeByTelegramUserId(userTelegramId, code, BASIC_STATE);
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(userTelegramId);
-        sendMessage.setText("Настройки завершены успешно");
+        sendMessage.setText("Код города сохранен");
         producerService.produceAnswer(sendMessage);
     }
 }
