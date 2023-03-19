@@ -22,48 +22,55 @@ public class UpdateController {
         this.updateProducer = updateProducer;
     }
 
-    public void registerBot(TelegramBot telegramBot){
+    public void registerBot(TelegramBot telegramBot) {
         this.telegramBot = telegramBot;
     }
 
-    public void processUpdate(Update update){
-        if (update == null){
+    public void processUpdate(Update update) {
+        if (update == null) {
             log.error("Received update is null");
             return;
         }
-        if (update.getMessage() != null){
+        if (update.getMessage() != null) {
             distributeMessage(update);
-        }else {
+        } else {
             log.error("Received unsupported message type " + update);
         }
     }
 
     private void distributeMessage(Update update) {
-        if (update.getMessage().hasText()){
+        if (update.getMessage().hasText()) {
             var messageText = update.getMessage().getText();
-            if (update.getMessage().isCommand()){
+            if (update.getMessage().isCommand()) {
                 switch (messageText) {
                     case "/register" -> registerUser(update);
-                    case "/weather" -> weatherRequest(update);
+//                    case "/weather" -> weatherRequest(update);
+                    case "/hourly" -> hourlyRequest(update);
+                    case "/daily" -> dailyRequest(update);
                     default -> setView(messageUtils.generateSendMessageWithText(update, "messageText"));
                 }
-            }else {
+            } else {
                 messageHandler(update);
             }
         }
     }
 
-    private void messageHandler(Update update){
-        updateProducer.produce(MESSAGE_HANDLER,update);
+    private void dailyRequest(Update update) {
+        updateProducer.produce(DAILY_FORECAST, update);
+    }
+
+    private void hourlyRequest(Update update) {
+        updateProducer.produce(HOURLY_FORECAST, update);
+    }
+
+    private void messageHandler(Update update) {
+        updateProducer.produce(MESSAGE_HANDLER, update);
     }
 
     private void registerUser(Update update) {
-        updateProducer.produce(REGISTER_USER,update);
+        updateProducer.produce(REGISTER_USER, update);
     }
 
-    private void weatherRequest(Update update){
-        updateProducer.produce(WEATHER_REQUEST,update);
-    }
 
     public void setView(SendMessage sendMessage) {
         telegramBot.sendAnswerMessage(sendMessage);

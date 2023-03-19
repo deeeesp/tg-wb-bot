@@ -8,8 +8,7 @@ import ru.stazaev.entity.dto.AppUserDTO;
 import ru.stazaev.service.ConsumerService;
 import ru.stazaev.service.WeatherRequestService;
 
-import static ru.stazaev.queue.RabbitQueue.CITY_CODE_REQUEST;
-import static ru.stazaev.queue.RabbitQueue.WEATHER_REQUEST;
+import static ru.stazaev.queue.RabbitQueue.*;
 
 @Service
 @Log4j2
@@ -22,9 +21,15 @@ public class ConsumerServiceImpl implements ConsumerService {
     }
 
     @Override
-    @RabbitListener(queues = WEATHER_REQUEST)
-    public void makeWeatherRequest(Update update) {
-        weatherRequestService.makeWeatherRequest(update);
+    @RabbitListener(queues = HOURLY_FORECAST)
+    public void hourlyRequest(Update update) {
+        weatherRequestService.hourlyForecast(update);
+    }
+
+    @Override
+    @RabbitListener(queues = DAILY_FORECAST)
+    public void dailyRequest(Update update) {
+        weatherRequestService.dailyForecast(update);
     }
 
     @Override

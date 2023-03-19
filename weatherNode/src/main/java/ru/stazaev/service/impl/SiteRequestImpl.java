@@ -24,19 +24,46 @@ public class SiteRequestImpl implements SiteRequest {
     @Override
     public int getCityCode(String city) {
         var uri = uriGenerator.generateCityCodeUri(city);
+        var request = sendRequest(uri);
+        if (request!= null && request.statusCode() == 200) {
+            JSONObject jsonObject = new JSONArray(request).getJSONObject(0);
+            return jsonObject.getInt("Key");
+        }
+        return -1;
+    }
+
+    @Override
+    public HttpResponse<String> getHourlyForecast(int city) {
+        var uri = uriGenerator.generateHourlyForecastUri(city);
+        var request = sendRequest(uri);
+        System.out.println(request);
+        if (request!= null && request.statusCode() == 200) {
+            return request;
+        }
+        return null;
+    }
+
+    @Override
+    public HttpResponse<String> getDailyForecast(int city) {
+        var uri = uriGenerator.generateDailyForecastUri(city);
+        var request = sendRequest(uri);
+        if (request!= null && request.statusCode() == 200) {
+            return request;
+        }
+        return null;
+    }
+
+    private HttpResponse<String> sendRequest(String uri) {
         try {
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(new URI(uri))
                     .GET()
                     .build();
             HttpClient client = HttpClient.newBuilder().build();
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
-            JSONObject jsonObject = new JSONArray(response.body()).getJSONObject(0);
-            return jsonObject.getInt("Key");
-        }catch (Exception e){
+            return client.send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (Exception e) {
             log.error(e);
         }
-        return -1;
+        return null;
     }
 }

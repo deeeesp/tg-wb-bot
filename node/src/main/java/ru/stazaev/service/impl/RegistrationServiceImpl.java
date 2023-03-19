@@ -62,12 +62,6 @@ public class RegistrationServiceImpl implements RegistrationService {
         producerService.produceAnswer(sendMessage);
     }
 
-//    public void setCity(Update update){
-//        User telegramUser = update.getMessage().getFrom();
-//        String city = update.getMessage().getText();
-//        producerService.produceCodeRequest(city,telegramUser.getId());
-//        appUserDAO.updateCityByTelegramUserId(telegramUser.getId(),city,BASIC_STATE);
-//    }
 
     @Override
     public void saveCode(AppUserDTO appUserDTO) {

@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.stazaev.entity.dto.AppUserDTO;
 import ru.stazaev.service.ConsumerService;
-import ru.stazaev.service.ProducerService;
 import ru.stazaev.service.RegistrationService;
 
 import static ru.stazaev.queue.RabbitQueue.*;
@@ -17,11 +16,9 @@ import static ru.stazaev.queue.RabbitQueue.*;
 public class ConsumerServiceImpl implements ConsumerService {
 
     private final RegistrationService registrationService;
-    private final ProducerService producerService;
 
-    public ConsumerServiceImpl(RegistrationService registrationService, ProducerService producerService) {
+    public ConsumerServiceImpl(RegistrationService registrationService) {
         this.registrationService = registrationService;
-        this.producerService = producerService;
     }
 
 
