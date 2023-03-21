@@ -31,20 +31,20 @@ public class DailyForecast {
 
     @Override
     public String toString() {
-        return "DailyForecast{" +
-                "id=" + id +
-                ", code=" + code +
-                ", date=" + date +
-                ", maxTemperature=" + maxTemperature +
-                ", minTemperature=" + minTemperature +
-                ", dayWeather='" + dayWeather + '\'' +
-                ", dayHasPrecipitation=" + dayHasPrecipitation +
-                ", dayPrecipitationType='" + dayPrecipitationType + '\'' +
-                ", dayPrecipitationIntensity='" + dayPrecipitationIntensity + '\'' +
-                ", nightWeather='" + nightWeather + '\'' +
-                ", nightHasPrecipitation=" + nightHasPrecipitation +
-                ", nightPrecipitationType='" + nightPrecipitationType + '\'' +
-                ", nightPrecipitationIntensity='" + nightPrecipitationIntensity + '\'' +
-                '}';
+        return  "Дата " + date + "\n" +
+                "Максимальная температура " + maxTemperature + "\n" +
+                "Минимальная температура " + minTemperature + "\n" +
+                "\n" +
+                "День \n" +
+                "Погода " + dayWeather + "\n" +
+                "Будут ли осадки " + dayHasPrecipitation + "\n" +
+                "Тип осадков " + dayPrecipitationType + "\n" +
+                "Сила садков " + dayPrecipitationIntensity + "\n" +
+                "\n" +
+                "Ночь \n" +
+                "Погода " + nightWeather + "\n" +
+                "Будут ли осадки " + nightHasPrecipitation + "\n" +
+                "Тип осадков " + nightPrecipitationType + "\n" +
+                "Сила садков " + nightPrecipitationIntensity + "\n";
     }
 }

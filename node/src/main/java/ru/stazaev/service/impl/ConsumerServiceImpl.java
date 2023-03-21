@@ -26,7 +26,6 @@ public class ConsumerServiceImpl implements ConsumerService {
     @RabbitListener(queues = REGISTER_USER)
     public void registerUser(Update update) {
         log.debug(update.getMessage().getText());
-        log.debug("Register - " + update);
         registrationService.registerOrGetUser(update);
     }
 
@@ -34,7 +33,6 @@ public class ConsumerServiceImpl implements ConsumerService {
     @RabbitListener(queues = MESSAGE_HANDLER)
     public void consumeTextMessageUpdates(Update update) {
         log.debug(update.getMessage().getText());
-        System.out.println("mes handler");
         registrationService.verifyIntroducedCity(update);
     }
 

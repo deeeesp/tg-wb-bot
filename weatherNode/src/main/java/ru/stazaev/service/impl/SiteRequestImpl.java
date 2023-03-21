@@ -33,10 +33,14 @@ public class SiteRequestImpl implements SiteRequest {
     }
 
     @Override
-    public HttpResponse<String> getHourlyForecast(int city) {
-        var uri = uriGenerator.generateHourlyForecastUri(city);
+    public HttpResponse<String> getHoursForecast(int city, int count) {
+        String uri;
+        if (count == 1){
+            uri = uriGenerator.generateHourForecastUri(city);
+        }else{
+            uri = uriGenerator.generateTwelveHourForecast(city);
+        }
         var request = sendRequest(uri);
-        System.out.println(request);
         if (request!= null && request.statusCode() == 200) {
             return request;
         }
@@ -44,8 +48,13 @@ public class SiteRequestImpl implements SiteRequest {
     }
 
     @Override
-    public HttpResponse<String> getDailyForecast(int city) {
-        var uri = uriGenerator.generateDailyForecastUri(city);
+    public HttpResponse<String> getDaysForecast(int city,int count) {
+        String uri;
+        if (count == 1) {
+            uri = uriGenerator.generateDayForecastUri(city);
+        }else{
+            uri = uriGenerator.generateFiveDaysForecastUri(city);
+        }
         var request = sendRequest(uri);
         if (request!= null && request.statusCode() == 200) {
             return request;

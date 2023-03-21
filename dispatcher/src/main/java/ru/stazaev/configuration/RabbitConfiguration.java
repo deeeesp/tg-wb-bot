@@ -46,14 +46,22 @@ public class RabbitConfiguration {
     }
 
     @Bean
-    public Queue hourlyForecastQueue() {
-        return new Queue(HOURLY_FORECAST);
+    public Queue hourForecastQueue() {
+        return new Queue(HOUR_FORECAST);
     }
 
     @Bean
-    public Queue daylyForecastQueue() {
-        return new Queue(DAILY_FORECAST);
+    public Queue twelveHoursForecastQueue() {
+        return new Queue(TWELVE_HOURS_FORECAST);
     }
 
+    @Bean
+    public Queue dayForecastQueue() {
+        return new Queue(DAY_FORECAST);
+    }
 
+    @Bean
+    public Queue fiveDaysForecastQueue() {
+        return new Queue(FIVE_DAYS_FORECAST);
+    }
 }

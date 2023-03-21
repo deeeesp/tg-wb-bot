@@ -44,10 +44,11 @@ public class UpdateController {
             if (update.getMessage().isCommand()) {
                 switch (messageText) {
                     case "/register" -> registerUser(update);
-//                    case "/weather" -> weatherRequest(update);
-                    case "/hourly" -> hourlyRequest(update);
-                    case "/daily" -> dailyRequest(update);
-                    default -> setView(messageUtils.generateSendMessageWithText(update, "messageText"));
+                    case "/hour" -> hourRequest(update);
+                    case "/12hours" -> twelveHoursRequest(update);
+                    case "/day" -> dayRequest(update);
+                    case "/5days" -> fiveDaysRequest(update);
+                    default -> setView(messageUtils.generateSendMessageWithText(update, messageText));
                 }
             } else {
                 messageHandler(update);
@@ -55,12 +56,20 @@ public class UpdateController {
         }
     }
 
-    private void dailyRequest(Update update) {
-        updateProducer.produce(DAILY_FORECAST, update);
+    private void fiveDaysRequest(Update update) {
+        updateProducer.produce(FIVE_DAYS_FORECAST,update);
     }
 
-    private void hourlyRequest(Update update) {
-        updateProducer.produce(HOURLY_FORECAST, update);
+    private void twelveHoursRequest(Update update) {
+        updateProducer.produce(TWELVE_HOURS_FORECAST,update);
+    }
+
+    private void dayRequest(Update update) {
+        updateProducer.produce(DAY_FORECAST, update);
+    }
+
+    private void hourRequest(Update update) {
+        updateProducer.produce(HOUR_FORECAST, update);
     }
 
     private void messageHandler(Update update) {

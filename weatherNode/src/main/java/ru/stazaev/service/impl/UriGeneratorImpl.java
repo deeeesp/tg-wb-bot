@@ -6,8 +6,10 @@ import ru.stazaev.service.UriGenerator;
 @Service
 public class UriGeneratorImpl implements UriGenerator {
     private static final String CODE_URI = "https://dataservice.accuweather.com/locations/v1/cities/search";
-    private static final String HOURLY_FORECAST_URI = "https://dataservice.accuweather.com/forecasts/v1/hourly/1hour/";
-    private static final String DAILY_FORECAST_URI = "https://dataservice.accuweather.com/forecasts/v1/daily/5day/";
+    private static final String HOUR_FORECAST_URI = "https://dataservice.accuweather.com/forecasts/v1/hourly/1hour/";
+    private static final String TWELVE_HOURS_FORECAST_URI = "https://dataservice.accuweather.com/forecasts/v1/hourly/12hour/";
+    private static final String DAY_FORECAST_URI = "https://dataservice.accuweather.com/forecasts/v1/daily/1day/";
+    private static final String FIVE_DAYS_FORECAST_URI = "https://dataservice.accuweather.com/forecasts/v1/daily/5day/";
     private static final String apiKey = "C3iBJ1zJ0upNcO8h76JFXGy8PopWv3Gl";
 //    axDKih6w9hAxeB1yuJBuoGLZqU8MjArJ
     private static final String queryParamApi = "apikey";
@@ -21,13 +23,23 @@ public class UriGeneratorImpl implements UriGenerator {
     }
 
     @Override
-    public String generateHourlyForecastUri(int city) {
-        return HOURLY_FORECAST_URI + city + "?" + queryParamApi + "=" + apiKey + "&" + queryParamLanguage + "=" + language;
+    public String generateHourForecastUri(int city) {
+        return HOUR_FORECAST_URI + city + "?" + queryParamApi + "=" + apiKey + "&" + queryParamLanguage + "=" + language;
     }
 
     @Override
-    public String generateDailyForecastUri(int city) {
-        return DAILY_FORECAST_URI + city + "?" + queryParamApi + "=" + apiKey + "&" + queryParamLanguage + "=" + language;
+    public String generateDayForecastUri(int city) {
+        return DAY_FORECAST_URI + city + "?" + queryParamApi + "=" + apiKey + "&" + queryParamLanguage + "=" + language;
+    }
+
+    @Override
+    public String generateTwelveHourForecast(int city) {
+        return TWELVE_HOURS_FORECAST_URI + city + "?" + queryParamApi + "=" + apiKey + "&" + queryParamLanguage + "=" + language;
+    }
+
+    @Override
+    public String generateFiveDaysForecastUri(int city) {
+        return FIVE_DAYS_FORECAST_URI + city + "?" + queryParamApi + "=" + apiKey + "&" + queryParamLanguage + "=" + language;
     }
 
 

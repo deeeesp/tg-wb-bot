@@ -3,6 +3,7 @@ package ru.stazaev.dao;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 import ru.stazaev.entity.HourlyForecast;
 
 import java.util.Date;
@@ -15,5 +16,8 @@ public interface HourlyForecastDAO extends JpaRepository<HourlyForecast, Long> {
     Optional<HourlyForecast> findHourlyForecastByCodeAndDate(int code, Date date);
 
     @Query("select h from HourlyForecast h where h.date >= :date and h.code =:code")
-    List<HourlyForecast> get(@Param("code") int code,@Param("date") Date date);
+    List<HourlyForecast> getHourForecast(@Param("code") int code, @Param("date") Date date);
+
+    @Transactional
+    void deleteAllByCode(int code);
 }

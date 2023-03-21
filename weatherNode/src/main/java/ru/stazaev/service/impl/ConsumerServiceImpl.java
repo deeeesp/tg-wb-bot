@@ -21,21 +21,36 @@ public class ConsumerServiceImpl implements ConsumerService {
     }
 
     @Override
-    @RabbitListener(queues = HOURLY_FORECAST)
+    @RabbitListener(queues = HOUR_FORECAST)
     public void hourlyRequest(Update update) {
-        weatherRequestService.hourlyForecast(update);
+        log.debug(update);
+        weatherRequestService.hourForecast(update);
     }
 
     @Override
-    @RabbitListener(queues = DAILY_FORECAST)
+    @RabbitListener(queues = DAY_FORECAST)
     public void dailyRequest(Update update) {
-        weatherRequestService.dailyForecast(update);
+        log.debug(update);
+        weatherRequestService.dayForecast(update);
+    }
+
+    @Override
+    @RabbitListener(queues = TWELVE_HOURS_FORECAST)
+    public void twelveHoursRequest(Update update) {
+        log.debug(update);
+        weatherRequestService.twelveHourForecast(update);
+    }
+
+    @Override
+    @RabbitListener(queues = FIVE_DAYS_FORECAST)
+    public void fiveDaysRequest(Update update) {
+        log.debug(update);
+        weatherRequestService.FiveDaysForecast(update);
     }
 
     @Override
     @RabbitListener(queues = CITY_CODE_REQUEST)
     public void cityCode(AppUserDTO appUserDTO) {
-        System.out.println("city request");
         log.debug(appUserDTO);
         weatherRequestService.verifyCity(appUserDTO);
     }

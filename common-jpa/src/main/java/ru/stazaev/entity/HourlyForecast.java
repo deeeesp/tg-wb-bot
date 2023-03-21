@@ -29,15 +29,11 @@ public class HourlyForecast {
 
     @Override
     public String toString() {
-        return "HourlyForecast{" +
-                "id=" + id +
-                ", code=" + code +
-                ", date=" + date +
-                ", weather='" + weather + '\'' +
-                ", hasPrecipitation=" + hasPrecipitation +
-                ", precipitationProbability=" + precipitationProbability +
-                ", precipitationType='" + precipitationType + '\'' +
-                ", precipitationIntensity='" + precipitationIntensity + '\'' +
-                '}';
+        return  "Дата " + date + "\n" +
+                "Погода " + weather + '\'' + "\n" +
+                "Будут ли осадки " + hasPrecipitation + "\n" +
+                "Вероятность осадков " + precipitationProbability + "\n" +
+                "Тип осадков " + precipitationType + '\'' + "\n" +
+                "Сила осадков " + precipitationIntensity + '\'' + "\n";
     }
 }
