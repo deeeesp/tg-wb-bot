@@ -1,30 +1,20 @@
-package ru.stazaev.entity;
+package ru.stazaev.entity.dto.forecast;
 
-import jakarta.persistence.*;
-import lombok.*;
-import ru.stazaev.entity.dto.forecast.Forecast;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Date;
 
 @Getter
 @Setter
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
-@Entity
-@Table(name = "daily_forecast")
-public class DailyForecast extends Forecast {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private int code;
+public class DailyWithNightPrecipitationDTO extends Forecast{
     private Date date;
     private int maxTemperature;
     private int minTemperature;
     private String dayWeather;
     private boolean dayHasPrecipitation;
-    private String dayPrecipitationType;
-    private String dayPrecipitationIntensity;
     private String nightWeather;
     private boolean nightHasPrecipitation;
     private String nightPrecipitationType;
@@ -39,8 +29,6 @@ public class DailyForecast extends Forecast {
                 "День \n" +
                 "Погода " + dayWeather + "\n" +
                 "Будут ли осадки " + dayHasPrecipitation + "\n" +
-                "Тип осадков " + dayPrecipitationType + "\n" +
-                "Сила садков " + dayPrecipitationIntensity + "\n" +
                 "\n" +
                 "Ночь \n" +
                 "Погода " + nightWeather + "\n" +

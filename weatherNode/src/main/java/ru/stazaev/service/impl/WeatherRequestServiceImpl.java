@@ -10,10 +10,13 @@ import ru.stazaev.dao.HourlyForecastDAO;
 import ru.stazaev.entity.DailyForecast;
 import ru.stazaev.entity.HourlyForecast;
 import ru.stazaev.entity.dto.AppUserDTO;
+import ru.stazaev.entity.dto.forecast.Forecast;
 import ru.stazaev.service.JsonFormatterService;
 import ru.stazaev.service.ProducerService;
 import ru.stazaev.service.SiteRequest;
 import ru.stazaev.service.WeatherRequestService;
+import ru.stazaev.service.mapper.forecast.DailyMapper;
+import ru.stazaev.service.mapper.forecast.HourlyMapper;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -26,24 +29,23 @@ public class WeatherRequestServiceImpl implements WeatherRequestService {
     private final AppUserDAO appUserDAO;
     private final SiteRequest siteRequest;
     private final JsonFormatterService jsonFormatterService;
-
+    private final HourlyMapper hourlyMapper;
+    private final DailyMapper dailyMapper;
     private final DailyForecastDAO dailyForecastDAO;
     private final HourlyForecastDAO hourlyForecastDAO;
 
-    //TODO DTO для прогноза с осадками и без, иначе приложение упадет
 
-    public WeatherRequestServiceImpl(ProducerService producerService, AppUserDAO appUserDAO, SiteRequest siteRequest, JsonFormatterService jsonFormatterService, DailyForecastDAO dailyForecastDAO, HourlyForecastDAO hourlyForecastDAO) {
+    public WeatherRequestServiceImpl(ProducerService producerService, AppUserDAO appUserDAO, SiteRequest siteRequest, JsonFormatterService jsonFormatterService, HourlyMapper hourlyMapper, DailyMapper dailyMapper, DailyForecastDAO dailyForecastDAO, HourlyForecastDAO hourlyForecastDAO) {
         this.producerService = producerService;
         this.appUserDAO = appUserDAO;
         this.siteRequest = siteRequest;
         this.jsonFormatterService = jsonFormatterService;
+        this.hourlyMapper = hourlyMapper;
+        this.dailyMapper = dailyMapper;
         this.dailyForecastDAO = dailyForecastDAO;
         this.hourlyForecastDAO = hourlyForecastDAO;
     }
 
-//TODO логи
-//TODO 12 часов и 5 дней
-//TODO DTO для осадков
 
     @Override
     public void dayForecast(Update update) {
@@ -64,7 +66,8 @@ public class WeatherRequestServiceImpl implements WeatherRequestService {
                 forecast.setCode(code);
                 dailyForecastDAO.save(forecast);
             }
-            sendMessage.setText(forecast.toString());
+            var forecastDTO = dailyForecastToDTO(forecast);
+            sendMessage.setText(forecastDTO.toString());
         } catch (Exception e) {
             log.error(e);
             sendMessage.setText("Ошибка обработки времени");
@@ -84,7 +87,8 @@ public class WeatherRequestServiceImpl implements WeatherRequestService {
                 for (int i = 0; i < forecastFromDao.size(); i++) {
                     SendMessage sendMessage = new SendMessage();
                     sendMessage.setChatId(message.getChatId());
-                    sendMessage.setText(forecastFromDao.get(i).toString());
+                    var forecastDTO = dailyForecastToDTO(forecastFromDao.get(i));
+                    sendMessage.setText(forecastDTO.toString());
                     producerService.produceAnswer(sendMessage);
                 }
             } else {
@@ -96,7 +100,8 @@ public class WeatherRequestServiceImpl implements WeatherRequestService {
                     dailyForecastDAO.save(forecast.get(i));
                     SendMessage sendMessage = new SendMessage();
                     sendMessage.setChatId(message.getChatId());
-                    sendMessage.setText(forecast.get(i).toString());
+                    var forecastDTO = dailyForecastToDTO(forecast.get(i));
+                    sendMessage.setText(forecastDTO.toString());
                     producerService.produceAnswer(sendMessage);
                 }
             }
@@ -126,7 +131,8 @@ public class WeatherRequestServiceImpl implements WeatherRequestService {
             forecast.setCode(code);
             hourlyForecastDAO.save(forecast);
         }
-        sendMessage.setText(forecast.toString());
+        var forecastResult = hourlyForecastToDTO(forecast);
+        sendMessage.setText(forecastResult.toString());
         producerService.produceAnswer(sendMessage);
     }
 
@@ -141,7 +147,9 @@ public class WeatherRequestServiceImpl implements WeatherRequestService {
                 SendMessage sendMessage = new SendMessage();
                 sendMessage.setChatId(message.getChatId());
                 HourlyForecast hourlyForecast = forecastFromDao.get(i);
-                sendMessage.setText(hourlyForecast.toString());
+                var forecastResult = hourlyForecastToDTO(hourlyForecast);
+
+                sendMessage.setText(forecastResult.toString());
                 producerService.produceAnswer(sendMessage);
             }
         } else {
@@ -153,7 +161,8 @@ public class WeatherRequestServiceImpl implements WeatherRequestService {
                 hourlyForecastDAO.save(tempForecast.get(i));
                 SendMessage sendMessage = new SendMessage();
                 sendMessage.setChatId(message.getChatId());
-                sendMessage.setText(tempForecast.get(i).toString());
+                var forecastDTO = hourlyForecastToDTO(tempForecast.get(i));
+                sendMessage.setText(forecastDTO.toString());
                 producerService.produceAnswer(sendMessage);
             }
         }
@@ -181,5 +190,21 @@ public class WeatherRequestServiceImpl implements WeatherRequestService {
         producerService.produceCodeResponse(appUserDTO);
     }
 
+    public Forecast dailyForecastToDTO(DailyForecast dailyForecast) {
+        if (dailyForecast.isDayHasPrecipitation() && dailyForecast.isNightHasPrecipitation()){
+            return dailyMapper.EntityToDTOWithPrecipitation(dailyForecast);
+        }else if (dailyForecast.isDayHasPrecipitation()){
+            return dailyMapper.EntityToDTOWithDayPrecipitation(dailyForecast);
+        } else if (dailyForecast.isNightHasPrecipitation()) {
+            return dailyMapper.EntityToDTOWithNightPrecipitation(dailyForecast);
+        }
+        return dailyMapper.EntityToDTOWoutPrecipitation(dailyForecast);
+    }
 
+    public Forecast hourlyForecastToDTO(HourlyForecast hourlyForecast) {
+        if (hourlyForecast.isHasPrecipitation()) {
+            return hourlyMapper.entityToWithoutPrecipitationDTO(hourlyForecast);
+        }
+        return hourlyMapper.entityToWithoutPrecipitationDTO(hourlyForecast);
+    }
 }

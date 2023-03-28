@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import ru.stazaev.entity.DailyForecast;
 import ru.stazaev.entity.HourlyForecast;
 import ru.stazaev.service.JsonFormatterService;
+import ru.stazaev.service.mapper.forecast.HourlyMapper;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import java.util.List;
 @Service
 @Log4j2
 public class JsonFormatterServiceImpl implements JsonFormatterService {
+
     @Override
     public HourlyForecast jsonHourFormatter(String string) {
         JSONArray array = new JSONArray(string);
@@ -78,8 +80,6 @@ public class JsonFormatterServiceImpl implements JsonFormatterService {
                     .temperature(temperatureConvert(temperature))
                     .hasPrecipitation(jsonObject.getBoolean("HasPrecipitation"))
                     .precipitationProbability(jsonObject.getInt("PrecipitationProbability"))
-//                    .precipitationType(jsonObject.getString("PrecipitationType"))
-//                    .precipitationIntensity(jsonObject.getString("PrecipitationIntensity"))
                     .build();
         }
     }
@@ -96,7 +96,9 @@ public class JsonFormatterServiceImpl implements JsonFormatterService {
             log.error(e);
             date = new Date();
         }
-        return DailyForecast.builder()
+        boolean hasDayPrecipitation = day.getBoolean("HasPrecipitation");
+        boolean hasNightPrecipitation = night.getBoolean("HasPrecipitation");
+        DailyForecast dailyForecast = DailyForecast.builder()
                 .date(date)
                 .maxTemperature(temperatureConvert(max))
                 .minTemperature(temperatureConvert(min))
@@ -105,6 +107,15 @@ public class JsonFormatterServiceImpl implements JsonFormatterService {
                 .nightWeather(night.getString("IconPhrase"))
                 .nightHasPrecipitation(night.getBoolean("HasPrecipitation"))
                 .build();
+        if (hasDayPrecipitation){
+            dailyForecast.setDayPrecipitationType(day.getString("PrecipitationType"));
+            dailyForecast.setDayPrecipitationIntensity(day.getString("PrecipitationIntensity"));
+        }
+        if (hasNightPrecipitation){
+            dailyForecast.setNightPrecipitationType(night.getString("PrecipitationType"));
+            dailyForecast.setNightPrecipitationIntensity(night.getString("PrecipitationIntensity"));
+        }
+        return dailyForecast;
     }
 
     private int temperatureConvert(int value) {
