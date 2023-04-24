@@ -14,7 +14,8 @@ import static ru.stazaev.queue.RabbitQueue.*;
 public class UpdateController {
     private TelegramBot telegramBot;
     private final MessageUtils messageUtils;
-
+    private final String HELLO_MES = "Введите /register \n" +
+            "Чтобы зарегистрироваться и начать пользоваьтся ботом";
     private final UpdateProducer updateProducer;
 
     public UpdateController(MessageUtils messageUtils, UpdateProducer updateProducer) {
@@ -40,9 +41,11 @@ public class UpdateController {
 
     private void distributeMessage(Update update) {
         if (update.getMessage().hasText()) {
+//            telegramBot.deleteIncomeMessage(update);
             var messageText = update.getMessage().getText();
             if (update.getMessage().isCommand()) {
                 switch (messageText) {
+                    case "/start" -> setView(messageUtils.generateSendMessageWithText(update, HELLO_MES));
                     case "/register" -> registerUser(update);
                     case "/hour" -> hourRequest(update);
                     case "/12hours" -> twelveHoursRequest(update);
@@ -80,8 +83,9 @@ public class UpdateController {
         updateProducer.produce(REGISTER_USER, update);
     }
 
-
     public void setView(SendMessage sendMessage) {
         telegramBot.sendAnswerMessage(sendMessage);
     }
+
+
 }

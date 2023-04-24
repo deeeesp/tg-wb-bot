@@ -21,7 +21,6 @@ public class WebHookController {
 
     @RequestMapping(value = "/callback/bot", method = RequestMethod.POST)
     public ResponseEntity<?> onUpdateReceived(@RequestBody Update update) {
-//        log.debug(update.getMessage());
         updateController.processUpdate(update);
         return ResponseEntity.ok().build();
     }

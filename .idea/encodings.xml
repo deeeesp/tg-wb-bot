@@ -5,13 +5,15 @@
     <file url="file://$PROJECT_DIR$/common-jpa/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/common-utils/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/dispatcher/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/json-formatter/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/messageNode/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/node/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/node/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/rabbitmq-queues/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/registration-node/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/registration-node/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/test/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/weatherNode/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/uri-generator/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/weather-node/src/main/java" charset="UTF-8" />
   </component>
 </project>

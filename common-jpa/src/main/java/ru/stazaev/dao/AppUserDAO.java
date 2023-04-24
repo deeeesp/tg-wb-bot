@@ -21,8 +21,8 @@ public interface AppUserDAO extends JpaRepository<AppUser, Long> {
 
     @Modifying
     @Transactional
-    @Query("update AppUser a set a.code =:code, a.state =:state where a.telegramUserId =:id")
-    void updateCityCopeByTelegramUserId(@Param("id") long id, @Param("code") int code, @Param("state") UserState status);
+    @Query("update AppUser a set a.city =:city, a.code =:code, a.state =:state where a.telegramUserId =:id")
+    void updateCityCopeByTelegramUserId(@Param("id") long id, @Param("code") int code, @Param("city") String city, @Param("state") UserState status);
 
     @Query("select a.code from AppUser a where a.city=:city")
     int findCodeByCity(@Param("city") String city);

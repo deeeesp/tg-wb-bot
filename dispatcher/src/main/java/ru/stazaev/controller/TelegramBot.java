@@ -7,6 +7,7 @@ import org.telegram.telegrambots.bots.TelegramWebhookBot;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.updates.SetWebhook;
+import org.telegram.telegrambots.meta.api.methods.updatingmessages.DeleteMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
@@ -70,6 +71,19 @@ public class TelegramBot extends TelegramWebhookBot {
             } catch (TelegramApiException e) {
                 log.error(e);
             }
+        }
+    }
+
+    public void deleteIncomeMessage(Update update){
+        var chatId = update.getMessage().getChatId();
+        var mesId = update.getMessage().getMessageId();
+        DeleteMessage deleteMessage = new DeleteMessage();
+        deleteMessage.setMessageId(mesId);
+        deleteMessage.setChatId(chatId);
+        try {
+            execute(deleteMessage);
+        }catch (Exception e){
+            log.error("Cannot delete income message " + e);
         }
     }
 }
